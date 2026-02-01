@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine 💘</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .box {
+      text-align: center;
+      background: white;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      max-width: 320px;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 25px;
+      color: #e63946;
+    }
+
+    .buttons {
+      position: relative;
+      height: 80px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    #yes {
+      background: #e63946;
+      color: white;
+      left: 40px;
+    }
+
+    #no {
+      background: #adb5bd;
+      color: white;
+      right: 40px;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .result img {
+      width: 220px;
+    }
+
+    .love-text {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #e63946;
+    }
+
+    /* 💕 Hearts */
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      animation: explode 2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(1.6);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio id="music">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9b0baf91b1.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="box">
+    <h1>Rahaf, will you be my Valentine? 💘</h1>
+
+    <div class="buttons">
+      <button id="yes">Yes ❤️</button>
+      <button id="no">No 😅</button>
+    </div>
+
+    <div class="result" id="result">
+      <img src="https://i.imgur.com/6X6QwQn.png" alt="Teddy Love">
+      <div class="love-text">I knew you’d say YES 🧸❤️</div>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const result = document.getElementById("result");
+    const music = document.getElementById("music");
+
+    const colors = ["❤️","💖","💜","💙","💛","💚"];
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    function explodeHearts() {
+      const rect = yesBtn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      for (let i = 0; i < 35; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.left = centerX + "px";
+        heart.style.top = centerY + "px";
+        heart.style.setProperty("--x", `${Math.random() * 300 - 150}px`);
+        heart.style.setProperty("--y", `${Math.random() * -300}px`);
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2000);
+      }
+    }
+
+    yesBtn.addEventListener("click", () => {
+      result.style.display = "block";
+      document.querySelector(".buttons").style.display = "none";
+      music.play();
+      explodeHearts();
+    });
+  </script>
+
+</body>
+</html>
